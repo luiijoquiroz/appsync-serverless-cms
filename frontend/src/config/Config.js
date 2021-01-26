@@ -1,14 +1,14 @@
 const AWSConfig = {
   amp: {
-    region: "ap-southeast-2",
-    identityPoolId: "YOUR_IDENTITY_POOLID",
-    userPoolId: "YOUR_COGNITO_POOLID",
-    userPoolWebClientId: "YOUR_COGNITO_POOLID_CLIENTID",
+    region: "us-east-2",
+    identityPoolId: "us-east-2:07111208-9c7a-4489-9f70-622e6e07aabc",
+    userPoolId: "us-east-2_jFOzJLDCw",
+    userPoolWebClientId: "61a00bfpjdkgguhmk48j1f5h4e",
     mandatorySignIn: false
   },
   appSync: {
-    url: "YOUR_APPSYNC_ENDPOINT",
-    region: "ap-southeast-2"
+    url: "https://5wxmbonewrebjp35a27voky3ve.appsync-api.us-east-2.amazonaws.com/graphql",
+    region: "us-east-2"
   }
 };
 
@@ -28,6 +28,7 @@ const AddPostFomSchema = {
   },
   schema: {
     title: "",
+    RUT: "",
     description: "",
     type: "object",
     properties: {
@@ -35,11 +36,16 @@ const AddPostFomSchema = {
         title: "Add Post",
         type: "object",
         required: ["title", "content"],
+        // required: ["title", "RUT","content"],
         properties: {
           title: {
             title: "Title",
             type: "string"
           },
+          // RUT: {
+          //   title: "RUT",
+          //   type: "string"
+          // },
           content: {
             type: "string",
             title: "Content"
@@ -55,3 +61,9 @@ const AddPostFomSchema = {
 };
 
 export { AWSConfig, AddPostFomSchema };
+
+// Inicializar el proveedor de credenciales de Amazon Cognito
+// AWS.config.region = 'us-east-2'; // Región
+// AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+//     IdentityPoolId: 'us-east-2:d1aec212-5a2c-49ce-ab6e-f67f175c3a9e',
+// });

@@ -9,9 +9,9 @@ service:
   name: appsyncauroranodejs
 provider:
   name: aws
-  runtime: nodejs8.10
+  runtime: nodejs12.x
   stage: ${opt:stage, 'dev'}
-  region: ${opt:region, 'ap-southeast-2'}
+  region: ${opt:region, 'us-east-2'}
   timeout: 300
   vpc:
     securityGroupIds:
@@ -33,8 +33,8 @@ custom:
   poolName: ${self:provider.stage}SimpleCMS
   dbName: "simpleCMS"
   dbUserName: "root"
-  dbPassword: "Password"
-  systemUserEmail: "dev@neami.app"
+  dbPassword: "Neoris.21"
+  systemUserEmail: "luisjqr_1990@hotmail.com"
   appSync:
     region: ${self:provider.region}
     name: ${self:service.name}-${self:provider.stage}

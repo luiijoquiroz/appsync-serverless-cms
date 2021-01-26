@@ -13,7 +13,7 @@ export default class Main extends Component {
     Hub.listen("auth", this, "main");
     this.state = { user: null };
   }
-
+  
   componentDidMount() {
     this.loadUser();
   }

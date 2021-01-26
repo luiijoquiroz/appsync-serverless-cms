@@ -5,7 +5,7 @@ import AWSAppSyncClient, {
   createAppSyncLink,
   createLinkWithCache
 } from "aws-appsync";
-import { AUTH_TYPE } from "aws-appsync/lib";
+import { AUTH_TYPE } from "aws-appsync";
 import { ApolloProvider } from "react-apollo";
 import { ApolloLink } from "apollo-link";
 import { withClientState } from "apollo-link-state";
@@ -67,46 +67,45 @@ const clientLink = createAppSyncLink({
 const link = ApolloLink.from([stateLink, clientLink]);
 const client = new AWSAppSyncClient({}, { link });
 
+
 export default class App extends Component {
   constructor(props) {
     super(props);
-
     Hub.listen("auth", this, "main");
   }
+  
   onHubCapsule(capsule) {
     const { channel, payload } = capsule;
-
     if (channel === "auth" && payload.event === "signIn") {
-      // Auth.currentUserInfo().then(authInfo => {
-      //   if (!authInfo || !authInfo.attributes) {
-      //     return;
-      //   }
-      //   const {
-      //     attributes: { sub: userid, name, email }
-      //   } = authInfo;
-      //
-      //   name &&
-      //     client
-      //       .mutate({
-      //         variables: { userid, name, email },
-      //         mutation: gql`
-      //           mutation updateMyAccount(
-      //             $userid: ID!
-      //             $name: String
-      //             $email: String
-      //           ) {
-      //             updateMyAccount(userid: $userid, name: $name, email: $email)
-      //               @client {
-      //               userid
-      //               name
-      //               email
-      //             }
-      //           }
-      //         `
-      //       })
-      //       .then(result => {})
-      //       .catch(error => {});
-      // });
+      Auth.currentUserInfo().then(authInfo => {
+        if (!authInfo || !authInfo.attributes) {
+          return;
+        }
+        const {
+          attributes: { sub: userid, name, email }
+        } = authInfo;
+        name &&
+          client
+            .mutate({
+              variables: { userid, name, email },
+              mutation: gql`
+                mutation updateMyAccount(
+                  $userid: ID!
+                  $name: String
+                  $email: String
+                ) {
+                  updateMyAccount(userid: $userid, name: $name, email: $email)
+                    @client {
+                    userid
+                    name
+                    email
+                  }
+                }
+              `
+            })
+            .then(result => {})
+            .catch(error => {});
+      });
     }
   }
 
@@ -114,6 +113,7 @@ export default class App extends Component {
     if (!client) {
       return <div />;
     }
+    console.log("CLIENT",client)
     return (
       <ApolloProvider client={client}>
         <Rehydrated>
